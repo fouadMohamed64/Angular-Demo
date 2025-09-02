@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from './Components/header/header.component';
 import { FooterComponent } from './Components/footer/footer.component';
-import { ProductsComponent } from './Components/products/products.component';
+import { OrderComponent } from './Components/order/order.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [HeaderComponent , FooterComponent , ProductsComponent],
+  imports: [HeaderComponent , FooterComponent , OrderComponent ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

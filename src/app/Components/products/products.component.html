@@ -1,11 +1,11 @@
 <!-- bs5- -->
-<div class="mb-3">
+<!-- <div class="mb-3">
     <label for="" class="form-label">Products Category</label>
-    <select class="form-select form-select-lg" name="" id="" [(ngModel)]="selectedCategoryID">
+    <select class="form-select form-select-lg" name="" id="" [(ngModel)]="selectedCategoryID" (change)="filterFunction()">
         <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
     </select>
-    <!-- <h1>{{selectedCategoryID}}</h1> -->
-</div>
+    <h1>{{selectedCategoryID}}</h1> 
+</div> -->
 
 
 <!-- <button (click)="changeSElectedCatID()">click</button> -->
@@ -14,37 +14,67 @@
 <div class="row row-cols-1 row-cols-md-4 g-4">
     <!-- <div class="col" *ngFor="let prd of products" [hidden]="prd.categoryID != selectedCategoryID" > -->
 
-    <ng-container *ngFor="let prd of products ; let i = index ; let c=count ; let l=last; trackBy:tracking">
-        <!-- <div class="col"  *ngIf="prd.categoryID == selectedCategoryID" > -->
-        <!-- <div class="col"  [style.display]="prd.categoryID != selectedCategoryID ? 'none' : 'block' "> -->
-        <div class="col"  >
-            <div class="card">
-                <img [src]="prd.imageURl" class="card-img-top" style="width: full; height: 200px;" [alt]="prd.name">
-                <!-- <div class="card-body" [class.bg-danger]="prd.quantity == 0"> -->
-                <!-- <div class="card-body" [ngStyle]="{'background-color': prd.quantity == 1 ? 'tomato' : 'gold' ,
+    <!-- <ng-container *ngFor="let prd of products ; let i = index ; let c=count ; let l=last; trackBy:tracking"> -->
+    @for (prd of filteredProducts; let i = $index ; track i) {
+    <!-- <div class="col"  *ngIf="prd.categoryID == selectedCategoryID" > -->
+    <!-- <div class="col"  [style.display]="prd.categoryID != selectedCategoryID ? 'none' : 'block' "> -->
+    <div class="col">
+        <div class="card">
+            <img ImageBorder="brown" defaultColor="yellow"  [src]="prd.imageURl" class="card-img-top" style="width: full; height: 200px;" [alt]="prd.name">
+            <!-- <div class="card-body" [class.bg-danger]="prd.quantity == 0"> -->
+            <!-- <div class="card-body" [ngStyle]="{'background-color': prd.quantity == 1 ? 'tomato' : 'gold' ,
                     'font-size': prd.quantity == 1 ? '20px' : '16px'
                  }"> -->
-                <div class="card-body" [ngClass]="{'text-warning' : prd.quantity ==1 , 'bg-danger': prd.quantity == 1}">
-                    <h6 class="card-title">{{i +1}}{{prd.name}}</h6>
-                    <p class="card-text">Product Price: {{prd.price}}</p>
-                    <p class="card-text" [ngSwitch]="prd.quantity">
-                        Product Qantity: 
-                        <span *ngSwitchCase="0">Out Of Stock</span>
-                        <span *ngSwitchCase="1">Last Item</span>
-                        <span *ngSwitchCase="2">Last 2 Items</span>
-                        <span *ngSwitchDefault>{{prd.quantity}}</span>
-                        <!-- <span *ngIf="prd.quantity == 0; else elseBlock">Out Of Stock</span> -->
-                        <!-- <ng-template #elseBlock>{{prd.quantity}}</ng-template> -->
-                        <!-- {{prd.quantity}} -->
-                    </p>
-                    <p class="card-text">CategoryID : {{prd.categoryID}}</p>
-                    <div class="d-flex">
-                        <input type="number" class="form-control" #inpValue> 
-                        <button class="btn btn-primary" (click)="buy(prd.price , inpValue.value)">Buy</button>
-                    </div>
+            <!-- <div class="card-body" [ngClass]="{'text-warning' : prd.quantity ==1 , 'bg-danger': prd.quantity == 1}"> -->
+            <div class="card-body">
+                <h6 class="card-title">{{i +1}}{{prd.name | separator:'|'}}</h6>
+                <p class="card-text">Product Price: {{prd.price | currency: 'EUR':'symbol'}}</p>
+                <!-- <p class="card-text" [ngSwitch]="prd.quantity">
+                    Product Qantity:
+                    <span *ngSwitchCase="0">Out Of Stock</span>
+                    <span *ngSwitchCase="1">Last Item</span>
+                    <span *ngSwitchCase="2">Last 2 Items</span>
+                    <span *ngSwitchDefault>{{prd.quantity}}</span>
+                     <span *ngIf="prd.quantity == 0; else elseBlock">Out Of Stock</span> 
+                    <ng-template #elseBlock>{{prd.quantity}}</ng-template> 
+                     {{prd.quantity}} 
+                </p> -->
+                <!-- @if (prd.quantity == 0) {
+                    <span>Out of stock</span>
+                }@else if (prd.quantity == 1){
+                    <span>Last One Item</span>
+                }@else{
+                    <span>Quantity: {{prd.quantity}}</span>
+                }  -->
+                    @switch (prd.quantity) {
+                        @case (0) {
+                            <span>Out of stock</span>
+                        }
+                        @case (1) {
+                            <span>Last One Item</span>
+                        }
+                        @case (2) {
+                            <span>Last Two Item</span>
+                        }
+                        @default {
+                            <span>Quantity: {{prd.quantity}}</span>
+                        }
+                    }
+                <p class="card-text">CategoryID : {{prd.categoryID}}</p>
+                <div class="d-flex">
+                    <input type="number" class="form-control" #inpValue>
+                    <button class="btn btn-primary" (click)="buy(prd.price , inpValue.value)">Buy</button>
                 </div>
             </div>
         </div>
-    </ng-container>
+    </div>
+
+    } @empty {
+        <h1>There is not products</h1>
+    }
+
+    <!-- </ng-container> -->
 
 </div>
+
+<!-- <h1>{{dateNow | date:'long'}}</h1> -->

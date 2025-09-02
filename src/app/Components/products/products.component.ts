@@ -1,22 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { IProducts } from '../../Models/iproducts';
 import { CommonModule } from '@angular/common';
 import { ICategory } from '../../Models/icategory';
 import { FormsModule } from '@angular/forms';
+import { ImageBorderDirective } from '../../Directives/image-border.directive';
+import { SeparatorPipe } from '../../Pipes/separator.pipe';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule , FormsModule],
+  imports: [CommonModule , FormsModule , ImageBorderDirective , SeparatorPipe],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnChanges , OnInit{
 
   products: IProducts[];
   categories: ICategory[];
   totalPrice: number = 0;
   selectedCategoryID: number = 1;
+  filteredProducts: IProducts[];
+  dateNow: Date = new Date();
+
+  @Input() recevedSelectedCategoryID:number = 1;
 
   constructor(){
     this.products = [
@@ -35,6 +41,13 @@ export class ProductsComponent {
       {id: 3 , name: 'Watch'},
       {id: 4 , name: 'Labtop'},
     ]
+    this.filteredProducts = this.products;
+  }
+  ngOnInit() {
+    this.filteredProducts = this.products;
+  }
+  ngOnChanges() {
+    this.filterFunction();
   }
 
   buy(prdPrice: number , inputValue: string){
@@ -48,8 +61,12 @@ export class ProductsComponent {
   // }
 
 
-  tracking( index:number , prd: IProducts ){
-    return prd.id;
+  // tracking( index:number , prd: IProducts ){
+  //   return prd.id;
+  // }
+
+  filterFunction(){
+    this.filteredProducts = this.products.filter((ele) => ele.categoryID == this.recevedSelectedCategoryID)
   }
   
 }
