@@ -27,8 +27,8 @@
                  }"> -->
             <!-- <div class="card-body" [ngClass]="{'text-warning' : prd.quantity ==1 , 'bg-danger': prd.quantity == 1}"> -->
             <div class="card-body">
-                <h6 class="card-title">{{i +1}}{{prd.name | separator:'|'}}</h6>
-                <p class="card-text">Product Price: {{prd.price | currency: 'EUR':'symbol'}}</p>
+                <h6 class="card-title">{{i +1}}{{prd.name}}</h6>
+                <p class="card-text">Product Price: {{prd.price }}</p>
                 <!-- <p class="card-text" [ngSwitch]="prd.quantity">
                     Product Qantity:
                     <span *ngSwitchCase="0">Out Of Stock</span>
@@ -61,10 +61,12 @@
                         }
                     }
                 <p class="card-text">CategoryID : {{prd.categoryID}}</p>
-                <div class="d-flex">
+                <!-- <div class="d-flex">
                     <input type="number" class="form-control" #inpValue>
                     <button class="btn btn-primary" (click)="buy(prd.price , inpValue.value)">Buy</button>
-                </div>
+                </div> -->
+                <!-- <button class="btn btn-success" (click)="showDetails(prd.id)">Show Details</button> -->
+                <button class="btn btn-success" [routerLink]="['/productDetails' , prd.id]">Show Details</button>
             </div>
         </div>
     </div>

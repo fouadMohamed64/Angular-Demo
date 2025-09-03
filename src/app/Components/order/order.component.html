@@ -6,5 +6,7 @@
 </div>
 
 <div class="bg-danger my-5 p-5">
-    <app-products [recevedSelectedCategoryID]="selectedCategoryID"></app-products>
+    <app-products [recevedSelectedCategoryID]="selectedCategoryID" (onTotalPriceChanges)="priceChanges($event)" ></app-products>
 </div>
+
+<h1>Total Order Price: {{totlaOrderPrice}}</h1>

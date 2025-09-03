@@ -16,6 +16,9 @@ export class OrderComponent {
   selectedCategoryID: number = 1;
   categories: ICategory[];
 
+  // non null assertion operator
+  totlaOrderPrice!: number
+
   constructor() {
     this.categories = [
       { id: 1, name: 'Car' },
@@ -23,5 +26,9 @@ export class OrderComponent {
       { id: 3, name: 'Watch' },
       { id: 4, name: 'Labtop' },
     ]
+  }
+
+  priceChanges(tPrice:number){
+    this.totlaOrderPrice = tPrice;
   }
 }

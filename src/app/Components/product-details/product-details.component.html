@@ -1,0 +1,16 @@
+<div class="card m-5 " style="width: 18rem;">
+  <img [src]="product?.imageURl" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{product?.name}}</h5>
+    <p class="card-text">Price: {{product?.price}}</p>
+    <p class="card-text">Quantity: {{product?.quantity}}</p>
+    <p class="card-text">CatID: {{product?.categoryID}}</p>
+    <div class="d-flex">
+        <button class="btn btn-primary" (click)="goBack()">Back</button>
+        <button class="btn btn-warning" (click)="prev()">Previos</button>
+        <button class="btn btn-success" (click)="next()">Next</button>
+    </div>
+  </div>
+</div>
+
+<!-- {{product | json}} -->
