@@ -7,8 +7,9 @@
     <p class="card-text">CatID: {{product?.categoryID}}</p>
     <div class="d-flex">
         <button class="btn btn-primary" (click)="goBack()">Back</button>
-        <button class="btn btn-warning" (click)="prev()">Previos</button>
-        <button class="btn btn-success" (click)="next()">Next</button>
+
+        <button class="btn btn-warning" (click)="prev()" [disabled]="productId == productsIDS[0]" >Previos</button>
+        <button class="btn btn-success" (click)="next()" [disabled]="productId == productsIDS[productsIDS.length-1] " >Next</button>
     </div>
   </div>
 </div>

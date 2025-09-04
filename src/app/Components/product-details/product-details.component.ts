@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IProducts } from '../../Models/iproducts';
 import { ProductsService } from '../../Services/products.service';
 import { CommonModule, Location } from '@angular/common';
@@ -15,25 +15,43 @@ export class ProductDetailsComponent implements OnInit {
 
   productId!: number;
   product: IProducts | null = null;
+  productsIDS!: number[]
 
   constructor(
     public activatedRoute: ActivatedRoute,
     public productsService: ProductsService,
-    public location: Location
+    public location: Location,
+    public router: Router
   ) { }
 
   ngOnInit() {
     // console.log(this.activatedRoute.snapshot.paramMap.get('id')) // id
-    this.productId = Number(this.activatedRoute.snapshot.paramMap.get('id'))
-    this.product = this.productsService.getProductById(this.productId)
+    // this.productId = Number(this.activatedRoute.snapshot.paramMap.get('id'))
+
+
+    this.activatedRoute.paramMap.subscribe((params) => {
+      this.productId = Number(params.get('id'))
+      this.product = this.productsService.getProductById(this.productId)
+    })
+
+
+    // this.product = this.productsService.getProductById(this.productId)
   }
 
   goBack() {
     this.location.back();
   }
 
-  prev(){}
+  prev() {
+    this.productsIDS = this.productsService.getProductsIds();
+    let index = this.productsIDS.indexOf(this.productId);
+    this.router.navigateByUrl(`/productDetails/${this.productsIDS[--index]}`)
+  }
 
-  next(){}
+  next() {
+    let productsIDS = this.productsService.getProductsIds();
+    let index = productsIDS.indexOf(this.productId);
+    this.router.navigateByUrl(`/productDetails/${productsIDS[++index]}`)
+  }
 
 }

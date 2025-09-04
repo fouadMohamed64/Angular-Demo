@@ -1,0 +1,40 @@
+<form [formGroup]="userRegisterForm" (ngSubmit)="onSubmit()">
+
+
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input formControlName="name" name="name" type="text" class="form-control">
+    </div>
+
+    <!-- <h1>{{userRegisterForm.get('name')?.errors| json}}</h1> -->
+
+    @if (getName?.touched && getName?.invalid) {
+    <div class="my-3">
+        <span class="text-danger alert alert-danger">Name is rquired</span>
+    </div>
+    }
+
+
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input formControlName="email" type="text" name="emai" class="form-control">
+    </div>
+
+    @if (getEmail?.touched && getEmail?.invalid) {
+    <div class="my-3">
+        @if (getEmail?.errors?.['required']) {
+            <span class="text-danger alert alert-danger">Email is rquired</span>
+        }
+        @if (getEmail?.errors?.['email']) {
+            <span class="text-danger alert alert-danger">Email Must Follow  Pattern</span>
+        }
+    </div>
+    }
+
+    <div class="mb-3">
+        <label class="form-label">password</label>
+        <input formControlName="password" type="text" name="password" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="userRegisterForm.invalid">Send</button>
+</form>
